@@ -8,5 +8,74 @@ namespace BornToMove
 {
     internal class ChooseFromList
     {
+        private string? answere = null;
+        private bool stepComplete = false;
+
+        private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        private CreateMove CreateMove = new CreateMove();
+
+        public Move go() 
+        {
+            Console.WriteLine("type the number you want \n");
+
+            var moves = getAllMoves();
+
+            displayList(moves);
+
+            int input = -1;
+            
+            while (stepComplete == false)
+            {
+                answere = Console.ReadLine();
+
+                try
+                {
+                    input = int.Parse(answere);
+                }
+                catch(FormatException e) 
+                {
+                    Console.WriteLine("error: " + e.Message);
+                }
+
+                if(input >= 0 && input <= moves.Count)
+                {
+                    stepComplete = true;
+                    break;
+                }
+
+                Console.WriteLine("input not valid, try again:");
+            }
+
+            stepComplete = false;
+
+            return selectFromList(input,moves);
+        }
+
+        public List<Move> getAllMoves()
+        { 
+            return moveRepo.getMoves();
+        }
+
+        public void displayList(List<Move> moves)
+        {
+            string output = "";
+
+            for (var i = 0;i < moves.Count;i++)
+            {
+                output += "." + (i+1) + ") " + moves[i].Name + "\n" + moves[i].Description + ".\n Sweat rate: " + moves[i].SweatRate + "\n\n";
+            }
+
+            Console.WriteLine(output);
+        }
+
+        public Move selectFromList(int input,List<Move> moves)
+        {
+            if(input <= 0)
+            {
+                return CreateMove.create();
+            }
+
+            return moves[input-1];
+        }
     }
 }

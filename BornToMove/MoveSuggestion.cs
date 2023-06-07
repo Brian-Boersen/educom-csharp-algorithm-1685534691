@@ -10,23 +10,31 @@ namespace BornToMove
     internal class MoveSuggestion
     {
         private BornToMoveRepository repo = new BornToMoveRepository();
+        private Random random = new Random();
+
         public Move suggest()
         {
-            return test();
-            return new Move(1, "Jogging", "jog for 5 minutes",4);
+            int id = selectRandomId(getAllIds());
+
+            return getMoveById(id);
+            //return new Move(1, "Jogging", "jog for 5 minutes",4);
         }
 
-        private int[] getAllIds()
+        private List<int> getAllIds()
         {
-            int[] ids = new int[1] {1};
-            return ids;
+            return repo.getAllIds();
         }
 
-        private Move test()
+        private int selectRandomId(List<int> ids)
         {
-            List<Move> moves = repo.GetMoves();
+            var ranIndex =  random.Next(0, ids.Count);
 
-            return moves[0];
+            return ids[ranIndex];
+        }
+
+        private Move getMoveById(int id)
+        {
+            return repo.getEntityById(id);
         }
     }
 }

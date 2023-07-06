@@ -3,20 +3,25 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 using static BornToMove.DAL.MoveCrud;
 
 namespace BornToMove.Business
 {
-    internal class BuMove
+    public class BuMove
     {
-        MoveCrud moveCrud;
+        MoveCrud moveCrud = new MoveCrud();
         Random random = new Random();
 
         public Move RandomMove()
         {
-            var id = random.Next();
+            List<Move> moves = GetMoves();
 
-            return moveCrud.GetMoveById(id);
+            var id = random.Next(0, moves.Count-1);
+
+            Console.WriteLine("random id: "+id);
+
+            return moves[id];
         }
 
         public List<Move> GetMoves()

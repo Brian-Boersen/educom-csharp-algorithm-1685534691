@@ -39,7 +39,7 @@ namespace BornToMove.DAL
 
         public void Delete(int id)
         {
-            _context.Update(id);
+            _context.Remove(id);
             _context.SaveChanges();
         }
     }

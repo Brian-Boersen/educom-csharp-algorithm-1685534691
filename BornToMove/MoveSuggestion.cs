@@ -4,23 +4,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BornToMove.DAL;
+using BornToMove.Business;
 
 
 namespace BornToMove
 {
     internal class MoveSuggestion
     {
-        private BornToMoveRepository repo = new BornToMoveRepository();
-        private Random random = new Random();
+        //private BornToMoveRepository repo = new BornToMoveRepository();
+        
+        private BuMove repo = new BuMove();
+
+        //private Random random = new Random();
 
         public Move suggest()
         {
-            int id = selectRandomId(getAllIds());
 
-            return getMoveById(id);
+            return repo.RandomMove();
+            //int id = selectRandomId(getAllIds());
+
+            //return getMoveById(id);
             //return new Move(1, "Jogging", "jog for 5 minutes",4);
         }
-
+        /*
         private List<int> getAllIds()
         {
             return repo.getAllIds();
@@ -37,5 +43,6 @@ namespace BornToMove
         {
             return repo.getEntityById(id);
         }
+        */
     }
 }

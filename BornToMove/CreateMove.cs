@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BornToMove.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,20 +13,20 @@ namespace BornToMove
 
         private BornToMoveRepository moveRepo = new BornToMoveRepository();
 
-        public Move create()
+        public Move Create()
         {
             Console.WriteLine("you choose to create a new move.");
 
-            setName();
+            SetName();
 
-            setAllData();
+            SetRemainingData();
 
-            addMove();
+            AddMove();
 
             return newMove;
         }
 
-        private void setName()
+        private void SetName()
         {
             bool complete = false;
 
@@ -34,7 +35,7 @@ namespace BornToMove
             while (complete == false)
             {
                 newMove.Name = Console.ReadLine();
-                complete = nameExists();
+                complete = NameExists();
 
                 if(complete == false)
                 {
@@ -43,14 +44,14 @@ namespace BornToMove
             }
         }
 
-        private bool nameExists()
+        private bool NameExists()
         {
             bool exists = moveRepo.doesNameExist(newMove.Name);
 
             return !exists;
         }
 
-        private void setAllData()
+        private void SetRemainingData()
         {
             Console.WriteLine("fill in a description of the move:");
 
@@ -84,7 +85,7 @@ namespace BornToMove
             }
         }
 
-        private void addMove()
+        private void AddMove()
         {
             newMove.Id = 1;
 

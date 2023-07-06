@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BornToMove.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace BornToMove
 {
     internal class ChooseFromList
     {
-        private string? answere = null;
+        private string answere = null;
         private bool stepComplete = false;
 
         private BornToMoveRepository moveRepo = new BornToMoveRepository();
@@ -72,7 +73,7 @@ namespace BornToMove
         {
             if(input <= 0)
             {
-                return CreateMove.create();
+                return CreateMove.Create();
             }
 
             return moves[input-1];

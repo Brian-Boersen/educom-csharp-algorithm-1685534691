@@ -1,7 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using BornToMove;
-using BornToMove.DAL;
 using System;
+
+using BornToMove.DAL;
+//remove later
+using BornToMove.Business;
 
 public class Program
 {
@@ -46,7 +49,7 @@ public class Program
 
                 if (stepCompleted == false)
                 {
-                    Console.WriteLine("input not valid, try again");
+                    Console.WriteLine("Input not valid, try again");
                 }
             }
 
@@ -58,7 +61,7 @@ public class Program
                 rating.rate(move);
             }
 
-            Console.WriteLine("do you want to do another exersise? y/n");
+            Console.WriteLine("Do you want to do another exersise? y/n");
             answere = Console.ReadLine();
 
             switch (answere)

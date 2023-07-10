@@ -12,6 +12,7 @@ namespace BornToMove.DAL
 
         public List<Move> GetAllMoves()
         {
+            //Console.WriteLine(_context.Moves);
             return _context.Moves.ToList();
         }
 

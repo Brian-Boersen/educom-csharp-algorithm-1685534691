@@ -1,4 +1,5 @@
-﻿using BornToMove.DAL;
+﻿using BornToMove.Business;
+using BornToMove.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace BornToMove
 {
     internal class Ratings
     {
-        private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        //private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        private BuMove buMove = new BuMove();
 
         public void rate(Move move)
         {
-            Console.WriteLine("after your exersise put in a new Sweatrating between 1 - 5:");
+            Console.WriteLine("After your exersise put in a new Sweatrating between 1 - 5:");
 
             int rating = -1;
 
@@ -23,7 +25,7 @@ namespace BornToMove
 
             rating = -1;
 
-            Console.WriteLine("\nadd a rating from 1 - 5 how much you liked it:");
+            Console.WriteLine("\nAdd a rating from 1 - 5 how much you liked it:");
 
             rating = setRating();
 
@@ -71,7 +73,7 @@ namespace BornToMove
 
         private void updateMove(Move move)
         {
-            moveRepo.updateMove(move);
+            buMove.UpdateRating(move);
         }
     }
 }

@@ -17,11 +17,9 @@ namespace BornToMove.Business
         {
             List<Move> moves = GetMoves();
 
-            var id = random.Next(0, moves.Count-1);
+            var index = random.Next(0, moves.Count);
 
-            Console.WriteLine("random id: "+id);
-
-            return moves[id];
+            return moves[index];
         }
 
         public List<Move> GetMoves()
@@ -29,7 +27,7 @@ namespace BornToMove.Business
             return moveCrud.GetAllMoves();
         }
 
-        public bool SetMove(Move move)
+        public Move SetMove(Move move)
         {
             if 
             (
@@ -39,11 +37,34 @@ namespace BornToMove.Business
                 IsEmpty(move.SweatRate) == true
             ) 
             {
+                return null;
+            }
+
+            var newmove = new Move();
+
+            newmove.Name = move.Name;
+            newmove.Description = move.Description;
+            newmove.SweatRate = 1;
+
+            moveCrud.Create(newmove);
+            
+            return newmove;
+        }
+
+        public bool UpdateRating(Move move)
+        {
+            if(
+                move.Rating < 1 || 
+                move.Rating > 5 || 
+                move.SweatRate < 1 || 
+                move.SweatRate > 5
+              )
+            {
                 return false;
             }
 
             moveCrud.Update(move);
-            
+
             return true;
         }
 
@@ -54,7 +75,7 @@ namespace BornToMove.Business
             return existingName != null;
         }
 
-        private bool IsEmpty(int checkInt)
+        private bool IsEmpty(int? checkInt)
         {
             return checkInt < 1 || checkInt > 5;
         }

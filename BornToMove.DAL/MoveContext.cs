@@ -12,7 +12,6 @@ namespace BornToMove.DAL
     {
         public DbSet<Move> Moves { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=BornToMoveDB;Trusted_Connection=true;TrustServerCertificate=true;");

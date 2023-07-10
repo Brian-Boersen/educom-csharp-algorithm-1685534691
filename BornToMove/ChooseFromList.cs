@@ -1,4 +1,5 @@
-﻿using BornToMove.DAL;
+﻿using BornToMove.Business;
+using BornToMove.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,9 @@ namespace BornToMove
         private string answere = null;
         private bool stepComplete = false;
 
-        private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        //private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        private BuMove repo = new BuMove();
+
         private CreateMove CreateMove = new CreateMove();
 
         public Move go() 
@@ -54,12 +57,12 @@ namespace BornToMove
 
         public List<Move> getAllMoves()
         { 
-            return moveRepo.getMoves();
+            return repo.GetMoves();
         }
 
         public void displayList(List<Move> moves)
         {
-            string output = "";
+            string output = ".0) Make Your own move\n\n";
 
             for (var i = 0;i < moves.Count;i++)
             {

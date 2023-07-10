@@ -1,4 +1,5 @@
-﻿using BornToMove.DAL;
+﻿using BornToMove.Business;
+using BornToMove.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace BornToMove
     {
         private Move newMove = new Move();
 
-        private BornToMoveRepository moveRepo = new BornToMoveRepository();
+        private BuMove buMove = new BuMove();
 
         public Move Create()
         {
@@ -35,7 +36,7 @@ namespace BornToMove
             while (complete == false)
             {
                 newMove.Name = Console.ReadLine();
-                complete = NameExists();
+                complete = !NameExists();
 
                 if(complete == false)
                 {
@@ -46,18 +47,18 @@ namespace BornToMove
 
         private bool NameExists()
         {
-            bool exists = moveRepo.doesNameExist(newMove.Name);
+            bool exists = buMove.NameExists(newMove.Name);
 
-            return !exists;
+            return exists;
         }
 
         private void SetRemainingData()
         {
-            Console.WriteLine("fill in a description of the move:");
+            Console.WriteLine("Fill in a description of the move:");
 
             newMove.Description = Console.ReadLine();
 
-            Console.WriteLine("set a sweatRate between 1 - 5:");
+            Console.WriteLine("Set a sweatRate between 1 - 5:");
 
             newMove.SweatRate = -1;
 
@@ -87,11 +88,9 @@ namespace BornToMove
 
         private void AddMove()
         {
-            newMove.Id = 1;
-
             try
             {
-                moveRepo.createMove(newMove);
+                newMove = buMove.SetMove(newMove);
             }
             catch(Exception e) { Console.WriteLine(e.Message);}
         }

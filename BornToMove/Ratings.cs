@@ -10,26 +10,13 @@ namespace BornToMove
 {
     internal class Ratings
     {
-        //private BornToMoveRepository moveRepo = new BornToMoveRepository();
         private BuMove buMove = new BuMove();
 
         public void rate(Move move)
         {
-            Console.WriteLine("After your exersise put in a new Sweatrating between 1 - 5:");
+            move.SweatRate = ConsoleInput.AskNumber(1, 5, "After your exersise put in a new Sweatrating between 1 - 5:");
 
-            int rating = -1;
-
-            rating = setRating();
-
-            move.SweatRate = rating;
-
-            rating = -1;
-
-            Console.WriteLine("\nAdd a rating from 1 - 5 how much you liked it:");
-
-            rating = setRating();
-
-            move.Rating = rating;
+            move.Rating = ConsoleInput.AskNumber(1, 5, "\nAdd a rating from 1 - 5 how much you liked it:");
 
             updateMove(move);
         }

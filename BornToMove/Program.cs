@@ -3,8 +3,6 @@ using BornToMove;
 using System;
 
 using BornToMove.DAL;
-//remove later
-using BornToMove.Business;
 
 public class Program
 {
@@ -18,57 +16,25 @@ public class Program
 
         Ratings rating = new Ratings();
 
-        string answere;
-
         bool run = true;
-        bool stepCompleted = false;
 
         while (run == true)
         {
-            Console.WriteLine("Time to move! \n Do you want me to suggest a move? \n (yes/y or no/n to select your self)");
-
-            answere = Console.ReadLine();
-
-            while (stepCompleted == false)
+            if(ConsoleInput.AskYesNo("Time to move! \n Do you want me to suggest a move? \n (yes/y or no/n to select your self)"))
             {
-                switch (answere)
-                {
-                    case "yes":
-                    case "y":
-                    case "":
-                        move = moveSuggestion.suggest();
-                        stepCompleted = true;
-                        break;
-
-                    case "no":
-                    case "n":
-                        move = chooseFromList.go();
-                        stepCompleted = true;
-                        break;
-                }
-
-                if (stepCompleted == false)
-                {
-                    Console.WriteLine("Input not valid, try again");
-                }
+                move = moveSuggestion.suggest();
+            }
+            else
+            {
+                move = chooseFromList.go();
             }
 
-            stepCompleted = false;
+            displayMove.show(move);
+            rating.rate(move);
 
-            if (move.Id >= 0)
+            if(!(ConsoleInput.AskYesNo("Do you want to do another exersise? y/n")))
             {
-                displayMove.show(move);
-                rating.rate(move);
-            }
-
-            Console.WriteLine("Do you want to do another exersise? y/n");
-            answere = Console.ReadLine();
-
-            switch (answere)
-            {
-                case "n":
-                    run = false;
-                    break;
+                run = false;
             }
         }
     }

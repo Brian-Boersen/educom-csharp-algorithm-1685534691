@@ -11,46 +11,20 @@ namespace BornToMove
     internal class ChooseFromList
     {
         private string answere = null;
-        private bool stepComplete = false;
 
-        //private BornToMoveRepository moveRepo = new BornToMoveRepository();
         private BuMove repo = new BuMove();
 
         private CreateMove CreateMove = new CreateMove();
 
         public Move go() 
         {
-            Console.WriteLine("type the number you want \n");
+            Console.WriteLine();
 
             var moves = getAllMoves();
 
             displayList(moves);
 
-            int input = -1;
-            
-            while (stepComplete == false)
-            {
-                answere = Console.ReadLine();
-
-                try
-                {
-                    input = int.Parse(answere);
-                }
-                catch(FormatException e) 
-                {
-                    Console.WriteLine("error: " + e.Message);
-                }
-
-                if(input >= 0 && input <= moves.Count)
-                {
-                    stepComplete = true;
-                    break;
-                }
-
-                Console.WriteLine("input not valid, try again:");
-            }
-
-            stepComplete = false;
+            int input = ConsoleInput.AskNumber(0, moves.Count, "type the number you want \n").GetValueOrDefault();
 
             return selectFromList(input,moves);
         }
@@ -74,7 +48,7 @@ namespace BornToMove
 
         public Move selectFromList(int input,List<Move> moves)
         {
-            if(input <= 0)
+            if(input == 0)
             {
                 return CreateMove.Create();
             }

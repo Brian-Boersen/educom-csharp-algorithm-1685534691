@@ -29,18 +29,21 @@ namespace BornToMove
 
         private void SetName()
         {
-            bool complete = false;
+            bool naming = true;
 
             Console.WriteLine("input the name of the new move:");
 
-            while (complete == false)
+            while (naming)
             {
                 newMove.Name = Console.ReadLine();
-                complete = !NameExists();
-
-                if(complete == false)
+                
+                if(NameExists())
                 {
                     Console.WriteLine("name already exists, please input a new one:");
+                }
+                else
+                {
+                    naming = false;
                 }
             }
         }
@@ -58,32 +61,7 @@ namespace BornToMove
 
             newMove.Description = Console.ReadLine();
 
-            Console.WriteLine("Set a sweatRate between 1 - 5:");
-
-            newMove.SweatRate = -1;
-
-            bool valid = false;
-
-            while(valid == false)
-            {
-                valid = true;
-                
-                try
-                {
-                    newMove.SweatRate = int.Parse(Console.ReadLine());
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                    valid = false;
-                }
-
-                if(valid == false || newMove.SweatRate < 1 || newMove.SweatRate > 5)
-                {
-                    Console.WriteLine("Please input only a number between 1 - 5");
-                    valid = false;
-                }
-            }
+            newMove.SweatRate = ConsoleInput.AskNumber(1,5, "Set a sweatRate between 1 - 5:");
         }
 
         private void AddMove()

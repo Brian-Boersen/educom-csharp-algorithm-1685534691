@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using BornToMove.DAL;
 
+//////////////////////////////////////////
+///
+
+//old durty code, don't mind this.
+
+///
+/////////////////////////////////
 namespace BornToMove
 {
     internal class BornToMoveRepository
@@ -34,13 +41,12 @@ namespace BornToMove
                                 Description = Convert.ToString(rdr["Description"])
                             };
 
-                            if (rdr["SweatRate"] is DBNull){}
-                            else
+                            if (!(rdr["SweatRate"] is DBNull))
                             {
                                 move.SweatRate = Convert.ToInt16(rdr["SweatRate"]);
                             }
 
-                            if (rdr["Rating"] is DBNull){}
+                            if (!(rdr["Rating"] is DBNull)){}
                             else
                             {
                                 move.Rating = Convert.ToInt16(rdr["Rating"]);
@@ -101,13 +107,13 @@ namespace BornToMove
                         move.Name = Convert.ToString(rdr["Name"]);
                         move.Description = Convert.ToString(rdr["Description"]);
 
-                        if (rdr["SweatRate"] is DBNull) { }
+                        if (!(rdr["SweatRate"] is DBNull)) { }
                         else
                         {
                             move.SweatRate = Convert.ToInt16(rdr["SweatRate"]);
                         }
 
-                        if (rdr["Rating"] is DBNull) { }
+                        if (!(rdr["Rating"] is DBNull)) { }
                         else
                         {
                             move.Rating = Convert.ToInt16(rdr["Rating"]);

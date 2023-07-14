@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace BornToMove.DAL
 
         public int? SweatRate { get; set; }
 
+        [Required]
+        public ICollection<MoveRating> Ratings { get; set; } //= new List<MoveRating>();
+
         public int? Rating { get; set; }
 
         public Move() { }
@@ -24,7 +28,6 @@ namespace BornToMove.DAL
             Name = name;
             Description = description;
             SweatRate = sweatRate;
-            Rating = rating;
         }
     }
 }

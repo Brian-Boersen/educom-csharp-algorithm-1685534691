@@ -1,7 +1,9 @@
 ﻿using BornToMove.DAL;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using static BornToMove.DAL.MoveCrud;
@@ -11,6 +13,8 @@ namespace BornToMove.Business
     public class BuMove
     {
         MoveCrud moveCrud = new MoveCrud();
+        RatingCrud ratingCrud = new RatingCrud();
+
         Random random = new Random();
 
         public Move RandomMove()
@@ -24,7 +28,7 @@ namespace BornToMove.Business
 
         public List<Move> GetMoves()
         {
-            return moveCrud.GetAllMoves();
+            return ratingCrud.GetAllMovesAndRatings();
         }
 
         public Move SetMove(Move move)
@@ -32,19 +36,22 @@ namespace BornToMove.Business
             if 
             (
                 move == null ||
-                IsEmpty(move.Name) == true ||
-                IsEmpty(move.Description) == true ||
-                IsEmpty(move.SweatRate) == true
+                IsEmpty(move.Name) ||
+                IsEmpty(move.Description) ||
+                IsEmpty(move.SweatRate) ||
+                IsEmpty(move.Ratings)
             ) 
             {
                 return null;
             }
 
+            //change when id is not used
             var newmove = new Move();
 
             newmove.Name = move.Name;
             newmove.Description = move.Description;
-            newmove.SweatRate = 1;
+            newmove.SweatRate = move.SweatRate;
+            newmove.Ratings = move.Ratings;
 
             moveCrud.Create(newmove);
             
@@ -53,9 +60,12 @@ namespace BornToMove.Business
 
         public bool UpdateRating(Move move)
         {
+            MoveRating rating = move.Ratings.LastOrDefault();
+
             if(
-                move.Rating < 1 || 
-                move.Rating > 5 || 
+                rating == default ||
+                rating.Rating < 1 || 
+                rating.Rating > 5 || 
                 move.SweatRate < 1 || 
                 move.SweatRate > 5
               )
@@ -64,6 +74,7 @@ namespace BornToMove.Business
             }
 
             moveCrud.Update(move);
+            ratingCrud.Update(rating);
 
             return true;
         }
@@ -83,6 +94,11 @@ namespace BornToMove.Business
         private bool IsEmpty(string checkString)
         {
             return string.IsNullOrEmpty(checkString);
+        }
+
+        private bool IsEmpty(ICollection<MoveRating> rating)
+        {
+            return !rating.Any();
         }
     }
 }

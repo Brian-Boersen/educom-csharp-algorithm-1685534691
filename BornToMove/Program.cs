@@ -4,10 +4,22 @@ using System;
 
 using BornToMove.DAL;
 
+//remove
+using BornToMove.Business;
+using System.Linq;
+
 public class Program
 {
     public static void Main(string[] args)
     {
+        ///test
+        ///
+
+        //test here
+
+        ///
+        ///test
+
         MoveSuggestion moveSuggestion = new MoveSuggestion();
         ChooseFromList chooseFromList = new ChooseFromList();
 

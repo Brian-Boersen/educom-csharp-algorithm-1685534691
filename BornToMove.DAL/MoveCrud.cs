@@ -1,6 +1,8 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,7 +14,6 @@ namespace BornToMove.DAL
 
         public List<Move> GetAllMoves()
         {
-            //Console.WriteLine(_context.Moves);
             return _context.Moves.ToList();
         }
 
@@ -40,7 +41,7 @@ namespace BornToMove.DAL
 
         public void Delete(int id)
         {
-            _context.Remove(id);
+            _context.Moves.Remove(GetMoveById(id));
             _context.SaveChanges();
         }
     }

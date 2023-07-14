@@ -49,7 +49,7 @@ namespace BornToMove
                             if (!(rdr["Rating"] is DBNull)){}
                             else
                             {
-                                move.Rating = Convert.ToInt16(rdr["Rating"]);
+                                //move.Rating = Convert.ToInt16(rdr["Rating"]);
                             }
 
                             moves.Add(move);
@@ -116,7 +116,7 @@ namespace BornToMove
                         if (!(rdr["Rating"] is DBNull)) { }
                         else
                         {
-                            move.Rating = Convert.ToInt16(rdr["Rating"]);
+                            //move.Rating = Convert.ToInt16(rdr["Rating"]);
                         }
                     }
                 }
@@ -197,7 +197,7 @@ namespace BornToMove
                     command.Connection = connection;
                     command.CommandText = sql;
                     command.Parameters.AddWithValue("@sweat", move.SweatRate);
-                    command.Parameters.AddWithValue("@rate", move.Rating);
+                    //command.Parameters.AddWithValue("@rate", move.Rating);
                     command.Parameters.AddWithValue("@id", move.Id);
 
                     try

@@ -20,8 +20,6 @@ namespace BornToMove.DAL
         [Required]
         public ICollection<MoveRating> Ratings { get; set; } //= new List<MoveRating>();
 
-        public int? Rating { get; set; }
-
         public Move() { }
         public Move(string name, string description, int sweatRate, int rating)
         {

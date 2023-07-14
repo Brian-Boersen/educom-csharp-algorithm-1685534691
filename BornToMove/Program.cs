@@ -12,14 +12,6 @@ public class Program
 {
     public static void Main(string[] args)
     {
-        ///test
-        ///
-
-        //test here
-
-        ///
-        ///test
-
         MoveSuggestion moveSuggestion = new MoveSuggestion();
         ChooseFromList chooseFromList = new ChooseFromList();
 
@@ -41,7 +33,7 @@ public class Program
                 move = chooseFromList.go();
             }
 
-            displayMove.show(move);
+            displayMove.Show(move);
             rating.rate(move);
 
             if(!(ConsoleInput.AskYesNo("Do you want to do another exersise? y/n")))

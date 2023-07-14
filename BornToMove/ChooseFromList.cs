@@ -38,6 +38,7 @@ namespace BornToMove
         {
             string output = ".0) Make Your own move\n\n";
 
+            //gets more dificult with linq
             for (var i = 0;i < moves.Count;i++)
             {
                 output += "." + (i+1) + ") " + moves[i].Name + "\n" + moves[i].Description + ".\n Sweat rate: " + moves[i].SweatRate + "\n\n";

@@ -42,20 +42,13 @@ namespace BornToMove.Business
                 IsEmpty(move.Ratings)
             ) 
             {
+                Console.WriteLine("set move failed");
                 return null;
             }
 
-            //change when id is not used
-            var newmove = new Move();
-
-            newmove.Name = move.Name;
-            newmove.Description = move.Description;
-            newmove.SweatRate = move.SweatRate;
-            newmove.Ratings = move.Ratings;
-
-            moveCrud.Create(newmove);
+            moveCrud.Create(move);
             
-            return newmove;
+            return move;
         }
 
         public bool UpdateRating(Move move)

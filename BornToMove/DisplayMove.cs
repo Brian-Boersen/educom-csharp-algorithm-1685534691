@@ -9,7 +9,7 @@ namespace BornToMove
 {
     internal class DisplayMove
     {
-        public void show (Move move)
+        public void Show (Move move)
         {
             string output ="\n Move: \n " + move.Name + "\n " + move.Description + "\n";
 
@@ -18,12 +18,17 @@ namespace BornToMove
                 output += " Sweat rate: " + move.SweatRate + "\n";
             }
 
-            if (move.Rating >= 0)
+            if (move.Ratings != null)
             {
-                output += " Rating: " + move.Rating + "\n";
+                output += " Rating: " + AverageRating(move.Ratings) + "\n";
             }
 
             Console.WriteLine(output);
+        }
+
+        public double? AverageRating(ICollection<MoveRating> ratings, int decimalPlaces = 1)
+        {
+            return Math.Round(ratings.Average(r => r.Rating).GetValueOrDefault(), decimalPlaces);
         }
     }
 }

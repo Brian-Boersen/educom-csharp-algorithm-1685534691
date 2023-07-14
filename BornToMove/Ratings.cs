@@ -16,49 +16,19 @@ namespace BornToMove
         {
             move.SweatRate = ConsoleInput.AskNumber(1, 5, "After your exersise put in a new Sweatrating between 1 - 5:");
 
-            move.Rating = ConsoleInput.AskNumber(1, 5, "\nAdd a rating from 1 - 5 how much you liked it:");
+            var rateNumber = ConsoleInput.AskNumber(1, 5, "\nAdd a rating from 1 - 5 how much you liked it:");
 
-            updateMove(move);
-        }
-
-        public int setRating() 
-        {
-            int rating = -1;
-            
-            while (true)
+            if(move.Ratings == null)
             {
-                rating = getRating();
-
-                if (rating > 0 && rating <= 5)
-                {
-                    break;
-                }
-
-                Console.WriteLine("\nPlease input only a number between 1 - 5");
+                move.Ratings = new List<MoveRating>();
             }
 
-            return rating;
+            move.Ratings.Add(new MoveRating() { Move = move, Rating = rateNumber });
+
+            updateRating(move);
         }
 
-        private int getRating()
-        {
-            string answere = Console.ReadLine();
-            
-            int rating = -1;
-
-            try
-            {
-                rating = Convert.ToInt32(answere);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return rating;
-        }
-
-        private void updateMove(Move move)
+        private void updateRating(Move move)
         {
             buMove.UpdateRating(move);
         }

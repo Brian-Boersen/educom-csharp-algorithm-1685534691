@@ -1,44 +1,109 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Organizer;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 
-namespace Organizer
+namespace MyFirstApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            // Press <F5> to run this code, when "Hello World!" appears in a black box, remove the line below and write your code below.
-            Console.WriteLine("Hello World!");
-            ShowList("Example of ShowList", new List<int>() { -33, 3, 2, 2, 3, 34, 34, 32, 1, 3, 5, 3, -22, -99, 33, -22, 11, 3, 33, 12, -2, -21, 4, 34, 22, 15, 34,-22 });
+            bool done = false;
+
+            while (done == false)
+            {
+                Console.WriteLine("how big should the list be?");
+
+                string inputString = Console.ReadLine();
+
+                int listSize = Int32.Parse(inputString);
+
+                performTask(listSize);
+
+                Console.WriteLine();
+                Console.WriteLine("continue? if not type: no or n");
+
+                string programContine = Console.ReadLine();
+
+                if (programContine == "no" || programContine == "n")
+                {
+                    done = true;
+                }
+            }
         }
 
-
-        /* Example of a static function */
-
-        /// <summary>
-        /// Show the list in lines of 20 numbers each
-        /// </summary>
-        /// <param name="label">The label for this list</param>
-        /// <param name="theList">The list to show</param>
-        public static void ShowList(string label, List<int> theList)
+        private static void performTask(int listSize)
         {
-            int count = theList.Count;
-            if (count > 100)
+            ShiftHighestSort shiftHighestSort = new ShiftHighestSort();
+            RotateSort rotateSort = new RotateSort();
+
+            Stopwatch stopwatch = new Stopwatch();
+            List<TimeSpan> durations = new List<TimeSpan>();
+            stopwatch.Start();
+
+            var listOfInts = randomIntList(listSize);
+
+            stopwatch.Stop();
+            durations.Add(stopwatch.Elapsed);
+            stopwatch.Restart();
+
+            var sortedList = listOfInts.ToList();
+            sortedList = shiftHighestSort.Sort(sortedList);
+
+            stopwatch.Stop();
+            durations.Add(stopwatch.Elapsed);
+            stopwatch.Restart();
+
+            var rotatedSortedList = listOfInts.ToList();
+            rotatedSortedList = rotateSort.Sort(rotatedSortedList);
+
+            stopwatch.Stop();
+            durations.Add(stopwatch.Elapsed);
+
+            Console.WriteLine("Random list");
+
+            foreach (var list in listOfInts)
             {
-                count = 300; // Do not show more than 300 numbers
+                Console.WriteLine(list);
             }
+
             Console.WriteLine();
-            Console.Write(label);
-            Console.Write(':');
-            for (int index = 0; index < count; index++)
+            Console.WriteLine("Shift highest");
+
+            foreach (var list in sortedList)
             {
-                if (index % 20 == 0) // when index can be divided by 20 exactly, start a new line
-                {
-                    Console.WriteLine();
-                }
-                Console.Write(string.Format("{0,3}, ", theList[index]));  // Show each number right aligned within 3 characters, with a comma and a space
+                Console.WriteLine(list);
             }
+
             Console.WriteLine();
+            Console.WriteLine("Rotate sort");
+
+            foreach (var list in rotatedSortedList)
+            {
+                Console.WriteLine(list);
+            }
+
+            Console.WriteLine();
+
+            foreach (var duration in durations)
+            {
+                Console.WriteLine("time taken = seconds: " + duration.Seconds + " Milliseconds " + duration.Milliseconds + " Microseconds " + duration.Microseconds);
+                Console.WriteLine();
+            }
+        }
+
+        private static List<int> randomIntList(int count)
+        {
+            var list = new List<int>();
+            var rand = new Random();
+
+            for (int i = 0; i < count; i++)
+            {
+                var num = rand.Next(-99,99);
+                list.Add(num);
+            }
+
+            return list;
         }
     }
 }

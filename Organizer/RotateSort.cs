@@ -1,45 +1,111 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Organizer
 {
-	public class RotateSort
-	{
-
+    internal class RotateSort
+    {
         private List<int> array = new List<int>();
+        private List<int> Arr 
+        {
+            get { return array; } 
+            set { array = value; } 
+        }
 
-        /// <summary>
-        /// Sort an array using the functions below
-        /// </summary>
-        /// <param name="input">The unsorted array</param>
-        /// <returns>The sorted array</returns>
+        private int minValue { get; set; } = 0;
+        private int minIndex { get; set; } = 0;
+
+        private int currentIndex { get; set; } = 0;
+        private int checkIndex { get; set; } = 0;
+
+        ///////////////////////////////////////////////
+       
         public List<int> Sort(List<int> input)
         {
-            array = new List<int>(input);
+            this.Arr = input;
+            Partitioning();
 
-            SortFunction(0, array.Count - 1);
-            return array;
+            return (List<int>)this.Arr;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="low">De index within this.array to start with</param>
-        /// <param name="high">De index within this.array to stop with</param>
-        private void SortFunction(int low, int high)
+        private void Partitioning()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("starting rotate sort");
+
+            int n = this.Arr.Count;
+
+            Console.WriteLine("next 1");
+/*
+            for(int i = 0; i < n;)
+            {
+                checkFollowing(Arr[i]);
+                currentIndex++;
+            }
+            //this.Arr.ForEach(x => checkFollowing(x));
+*/
+            for (int i = 0; i < n - 1; i++)
+            {
+                int minValue = this.Arr[i];
+                int minIndex = i;
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    if (this.Arr[j] < minValue)
+                    {
+                        minValue = this.Arr[j];
+                        minIndex = j;
+                    }
+                }
+
+                RotateList(i, minIndex);
+            }
         }
 
-        /// 
-        /// Partition the array in a group 'low' digits (e.a. lower than a choosen pivot) and a group 'high' digits
-        /// </summary>
-        /// <param name="low">De index within this.array to start with</param>
-        /// <param name="high">De index within this.array to stop with</param>
-        /// <returns>The index in the array of the first of the 'high' digits</returns>
-        private int Partitioning(int low, int high)
+        private void checkFollowing(int x)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("x = " + x);
+
+            setMin(currentIndex);
+
+            List<int> ListAfterX =  this.Arr.Skip(currentIndex + 1).ToList();
+
+            checkIndex = 0;
+
+            ListAfterX.ForEach(y => checkIfLower(y));
+
+            Console.WriteLine("next 6");
+
+            RotateList(currentIndex, minIndex);
+        }
+
+        private void checkIfLower(int y)
+        {
+            Console.WriteLine("check index " + checkIndex);
+
+            if (y < minValue)
+            {
+                setMin((currentIndex + 1) + checkIndex);
+                Console.WriteLine("smaller " + checkIndex);
+            }
+
+            checkIndex++;
+        }
+
+        private void setMin(int min)
+        {
+            this.minValue = this.Arr[min];
+            this.minIndex = min;
+        }
+
+        private void RotateList(int start, int end)
+        {
+            int temp = this.Arr[end];
+            this.Arr.RemoveAt(end);
+            this.Arr.Insert(start, temp);
         }
     }
 }
